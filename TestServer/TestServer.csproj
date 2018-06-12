@@ -76,8 +76,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationHelper.cs" />
+    <Compile Include="ContentHelper.cs" />
+    <Compile Include="Deflate.ashx.cs">
+      <DependentUpon>Deflate.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Echo.ashx.cs">
       <DependentUpon>Echo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="GZip.ashx.cs">
+      <DependentUpon>GZip.ashx</DependentUpon>
     </Compile>
     <Compile Include="NameValueCollectionConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Echo.ashx" />
+    <Content Include="Deflate.ashx" />
+    <Content Include="GZip.ashx" />
     <None Include="packages.config" />
     <Content Include="VerifyUpload.ashx" />
     <None Include="Web.Debug.config">
