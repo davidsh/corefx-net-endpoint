@@ -83,10 +83,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestHelper.cs" />
     <Compile Include="RequestInformation.cs" />
+    <Compile Include="VerifyUpload.ashx.cs">
+      <DependentUpon>VerifyUpload.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Echo.ashx" />
     <None Include="packages.config" />
+    <Content Include="VerifyUpload.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
