@@ -83,6 +83,12 @@
     <Compile Include="Echo.ashx.cs">
       <DependentUpon>Echo.ashx</DependentUpon>
     </Compile>
+    <Compile Include="EchoWebSocket.ashx.cs">
+      <DependentUpon>EchoWebSocket.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="EchoWebSocketHeaders.ashx.cs">
+      <DependentUpon>EchoWebSocketHeaders.ashx</DependentUpon>
+    </Compile>
     <Compile Include="GZip.ashx.cs">
       <DependentUpon>GZip.ashx</DependentUpon>
     </Compile>
@@ -96,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Echo.ashx" />
+    <Content Include="EchoWebSocket.ashx" />
+    <Content Include="EchoWebSocketHeaders.ashx" />
     <Content Include="Deflate.ashx" />
     <Content Include="GZip.ashx" />
     <None Include="packages.config" />
