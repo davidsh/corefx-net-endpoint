@@ -99,6 +99,9 @@
     </Compile>
     <Compile Include="RequestHelper.cs" />
     <Compile Include="RequestInformation.cs" />
+    <Compile Include="StatusCode.ashx.cs">
+      <DependentUpon>StatusCode.ashx</DependentUpon>
+    </Compile>
     <Compile Include="VerifyUpload.ashx.cs">
       <DependentUpon>VerifyUpload.ashx</DependentUpon>
     </Compile>
@@ -111,6 +114,7 @@
     <Content Include="GZip.ashx" />
     <None Include="packages.config" />
     <Content Include="Redirect.ashx" />
+    <Content Include="StatusCode.ashx" />
     <Content Include="VerifyUpload.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
