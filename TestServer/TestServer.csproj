@@ -94,6 +94,9 @@
     </Compile>
     <Compile Include="NameValueCollectionConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Redirect.ashx.cs">
+      <DependentUpon>Redirect.ashx</DependentUpon>
+    </Compile>
     <Compile Include="RequestHelper.cs" />
     <Compile Include="RequestInformation.cs" />
     <Compile Include="VerifyUpload.ashx.cs">
@@ -107,6 +110,7 @@
     <Content Include="Deflate.ashx" />
     <Content Include="GZip.ashx" />
     <None Include="packages.config" />
+    <Content Include="Redirect.ashx" />
     <Content Include="VerifyUpload.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
