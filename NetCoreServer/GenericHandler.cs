@@ -47,6 +47,18 @@ namespace NetCoreServer
                 return;
             }
 
+            if (path.Equals(new PathString("/WebSocket/EchoWebSocket.ashx")))
+            {
+                await EchoWebSocketHandler.InvokeAsync(context);
+                return;
+            }
+
+            if (path.Equals(new PathString("/WebSocket/EchoWebSocketHeaders.ashx")))
+            {
+                await EchoWebSocketHeadersHandler.InvokeAsync(context);
+                return;
+            }
+
             // Default handling.
             await EchoHandler.InvokeAsync(context);
         }
