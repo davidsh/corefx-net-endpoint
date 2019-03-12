@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace NetCoreServer
 {
@@ -18,15 +16,39 @@ namespace NetCoreServer
 
         public async Task Invoke(HttpContext context)
         {
-            var builder = new StringBuilder();
-            builder.AppendLine($"{context.Request.Method} {context.Request.Path}{context.Request.QueryString}");
-            foreach (KeyValuePair<string, StringValues> pair in context.Request.Headers)
+            PathString path = context.Request.Path;
+            if (path.Equals(new PathString("/echo.ashx")))
             {
-                builder.AppendLine($"{pair.Key}: {pair.Value}");
+                await EchoHandler.InvokeAsync(context);
+                return;
             }
 
-            context.Response.ContentType = "text/plain";
-            await context.Response.WriteAsync(builder.ToString());
+            if (path.Equals(new PathString("/deflate.ashx")))
+            {
+                await DeflateHandler.InvokeAsync(context);
+                return;
+            }
+
+            if (path.Equals(new PathString("/gzip.ashx")))
+            {
+                await DeflateHandler.InvokeAsync(context);
+                return;
+            }
+
+            if (path.Equals(new PathString("/redirect.ashx")))
+            {
+                RedirectHandler.Invoke(context);
+                return;
+            }
+
+            if (path.Equals(new PathString("/statuscode.ashx")))
+            {
+                StatusCodeHandler.Invoke(context);
+                return;
+            }
+
+            // Default handling.
+            await EchoHandler.InvokeAsync(context);
         }
     }
 
@@ -35,6 +57,11 @@ namespace NetCoreServer
         public static IApplicationBuilder UseGenericHandler(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<GenericHandler>();
+        }
+
+        public static void SetStatusDescription(this HttpResponse response, string description)
+        {
+            response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = description;
         }
     }
 }

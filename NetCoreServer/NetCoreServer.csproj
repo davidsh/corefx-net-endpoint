@@ -9,4 +9,9 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>
