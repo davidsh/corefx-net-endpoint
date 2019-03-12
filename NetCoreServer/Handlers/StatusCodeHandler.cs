@@ -13,10 +13,8 @@ namespace NetCoreServer
             {
                 int statusCode = int.Parse(statusCodeString);
                 context.Response.StatusCode = statusCode;
-                if (statusDescription != null)
-                {
-                    context.Response.SetStatusDescription(statusDescription);
-                }
+                context.Response.SetStatusDescription(
+                    string.IsNullOrWhiteSpace(statusDescription) ? " " : statusDescription);
             }
             catch (Exception)
             {
