@@ -30,7 +30,7 @@ namespace NetCoreServer
 
             if (path.Equals(new PathString("/gzip.ashx")))
             {
-                await DeflateHandler.InvokeAsync(context);
+                await GZipHandler.InvokeAsync(context);
                 return;
             }
 
@@ -46,13 +46,13 @@ namespace NetCoreServer
                 return;
             }
 
-            if (path.Equals(new PathString("/WebSocket/EchoWebSocket.ashx")))
+            if (path.Equals(new PathString("/websocket/echowebsocket.ashx")))
             {
                 await EchoWebSocketHandler.InvokeAsync(context);
                 return;
             }
 
-            if (path.Equals(new PathString("/WebSocket/EchoWebSocketHeaders.ashx")))
+            if (path.Equals(new PathString("/websocket/echowebsocketheaders.ashx")))
             {
                 await EchoWebSocketHeadersHandler.InvokeAsync(context);
                 return;
