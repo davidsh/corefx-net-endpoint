@@ -7,7 +7,6 @@ namespace NetCoreServer
 {
     public class GenericHandler
     {
-
         // Must have constructor with this signature, otherwise exception at run time.
         public GenericHandler(RequestDelegate next)
         {
@@ -56,6 +55,12 @@ namespace NetCoreServer
             if (path.Equals(new PathString("/WebSocket/EchoWebSocketHeaders.ashx")))
             {
                 await EchoWebSocketHeadersHandler.InvokeAsync(context);
+                return;
+            }
+
+            if (path.Equals(new PathString("/verifyupload.ashx")))
+            {
+                StatusCodeHandler.Invoke(context);
                 return;
             }
 
