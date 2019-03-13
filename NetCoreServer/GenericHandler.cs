@@ -16,15 +16,21 @@ namespace NetCoreServer
         public async Task Invoke(HttpContext context)
         {
             PathString path = context.Request.Path;
+            if (path.Equals(new PathString("/deflate.ashx")))
+            {
+                await DeflateHandler.InvokeAsync(context);
+                return;
+            }
+
             if (path.Equals(new PathString("/echo.ashx")))
             {
                 await EchoHandler.InvokeAsync(context);
                 return;
             }
 
-            if (path.Equals(new PathString("/deflate.ashx")))
+            if (path.Equals(new PathString("/emptycontent.ashx")))
             {
-                await DeflateHandler.InvokeAsync(context);
+                EmptyContentHandler.Invoke(context);
                 return;
             }
 
@@ -46,6 +52,12 @@ namespace NetCoreServer
                 return;
             }
 
+            if (path.Equals(new PathString("/verifyupload.ashx")))
+            {
+                VerifyUploadHandler.Invoke(context);
+                return;
+            }
+
             if (path.Equals(new PathString("/websocket/echowebsocket.ashx")))
             {
                 await EchoWebSocketHandler.InvokeAsync(context);
@@ -55,12 +67,6 @@ namespace NetCoreServer
             if (path.Equals(new PathString("/websocket/echowebsocketheaders.ashx")))
             {
                 await EchoWebSocketHeadersHandler.InvokeAsync(context);
-                return;
-            }
-
-            if (path.Equals(new PathString("/verifyupload.ashx")))
-            {
-                VerifyUploadHandler.Invoke(context);
                 return;
             }
 
