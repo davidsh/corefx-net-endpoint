@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
@@ -48,10 +49,22 @@ namespace NetCoreServer
             }
             info.Cookies = cookies;
 
-            Stream stream = request.Body;
-            using (var reader = new StreamReader(stream))
+            string body = string.Empty;
+            try
             {
-                string body = reader.ReadToEnd();
+                Stream stream = request.Body;
+                using (var reader = new StreamReader(stream))
+                {
+                    body = reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                // We might want to log these exceptions also.
+                body = ex.ToString();
+            }
+            finally
+            {
                 info.BodyContent = body;
                 info.BodyLength = body.Length;
             }
