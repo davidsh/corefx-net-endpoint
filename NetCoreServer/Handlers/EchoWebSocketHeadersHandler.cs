@@ -30,10 +30,9 @@ namespace NetCoreServer
                 await ProcessWebSocketRequest(socket, context.Request.Headers);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                context.Response.StatusCode = 500;
-                context.Response.SetStatusDescription(ex.Message);
+                // We might want to log these exceptions. But for now we ignore them.
             }
         }
 
