@@ -33,7 +33,8 @@ namespace NetCoreServer
 
                 context.Response.Headers.Add("Content-MD5", encodedHash);
                 context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(echoJson);
+                context.Response.ContentLength = bytes.Length;
+                await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
             }
         }
     }
