@@ -86,5 +86,10 @@ namespace NetCoreServer
         {
             response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = description;
         }
+
+        public static void AddEndpointVersionHeader(this HttpResponse response)
+        {
+            response.Headers.Add("X-EchoServer-Version", "2019-04-11 11:55AM PDT");
+        }
     }
 }

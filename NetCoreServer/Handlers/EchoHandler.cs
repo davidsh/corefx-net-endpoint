@@ -32,7 +32,7 @@ namespace NetCoreServer
                 string encodedHash = Convert.ToBase64String(hash);
 
                 // Add Echo server version information.
-                context.Response.Headers.Add("X-EchoServer-Version", "2019-04-11 11:09AM PDT");
+                context.Response.AddEndpointVersionHeader();
 
                 context.Response.Headers.Add("Content-MD5", encodedHash);
                 context.Response.ContentType = "application/json";
