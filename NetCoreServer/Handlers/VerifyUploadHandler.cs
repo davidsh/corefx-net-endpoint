@@ -25,31 +25,42 @@ namespace NetCoreServer
                 context.Response.Headers.Add("X-HttpRequest-Headers-TransferEncoding", transferEncoding);
             }
 
-            // Get expected MD5 hash of request body.
-            string expectedHash = context.Request.Headers["Content-MD5"];
-            if (string.IsNullOrEmpty(expectedHash))
-            {
-                context.Response.StatusCode = 400;
-                context.Response.SetStatusDescription("Missing 'Content-MD5' request header");
-                return;
-            }
+            // Get request body.
+            byte[] requestBodyBytes = ReadAllRequestBytes(context);
 
-            // Compute MD5 hash of received request body.
-            string actualHash;
-            using (MD5 md5 = MD5.Create())
+            // Check MD5 checksum for non-empty request body.
+            if (requestBodyBytes.Length > 0)
             {
-                byte[] hash = md5.ComputeHash(ReadAllRequestBytes(context));
-                actualHash = Convert.ToBase64String(hash);
-            }
+                // Get expected MD5 hash of request body.
+                string expectedHash = context.Request.Headers["Content-MD5"];
+                if (string.IsNullOrEmpty(expectedHash))
+                {
+                    context.Response.StatusCode = 400;
+                    context.Response.SetStatusDescription("Missing 'Content-MD5' request header");
+                    return;
+                }
 
-            if (expectedHash == actualHash)
-            {
-                context.Response.StatusCode = 200;
+                // Compute MD5 hash of received request body.
+                string actualHash;
+                using (MD5 md5 = MD5.Create())
+                {
+                    byte[] hash = md5.ComputeHash(requestBodyBytes);
+                    actualHash = Convert.ToBase64String(hash);
+                }
+
+                if (expectedHash == actualHash)
+                {
+                    context.Response.StatusCode = 200;
+                }
+                else
+                {
+                    context.Response.StatusCode = 400;
+                    context.Response.SetStatusDescription("Received request body fails MD5 checksum");
+                }
             }
             else
             {
-                context.Response.StatusCode = 400;
-                context.Response.SetStatusDescription("Request body not verfied");
+                context.Response.StatusCode = 200;
             }
         }
 
