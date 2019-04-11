@@ -24,12 +24,15 @@ namespace NetCoreServer
             RequestInformation info = RequestInformation.Create(context.Request);
             string echoJson = info.SerializeToJson();
 
-            // Compute MD5 hash to clients can verify the received data.
+            // Compute MD5 hash so that clients can verify the received data.
             using (MD5 md5 = MD5.Create())
             {
                 byte[] bytes = Encoding.UTF8.GetBytes(echoJson);
                 byte[] hash = md5.ComputeHash(bytes);
                 string encodedHash = Convert.ToBase64String(hash);
+
+                // Add Echo server version information.
+                context.Response.Headers.Add("X-EchoServer-Version", "2019-04-11 11:09AM PDT");
 
                 context.Response.Headers.Add("Content-MD5", encodedHash);
                 context.Response.ContentType = "application/json";

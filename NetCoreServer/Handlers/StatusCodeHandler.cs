@@ -18,7 +18,7 @@ namespace NetCoreServer
             }
             catch (Exception)
             {
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = 400;
                 context.Response.SetStatusDescription($"Error parsing statuscode: {statusCodeString}");
             }
         }

@@ -29,7 +29,7 @@ namespace NetCoreServer
             string expectedHash = context.Request.Headers["Content-MD5"];
             if (string.IsNullOrEmpty(expectedHash))
             {
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = 400;
                 context.Response.SetStatusDescription("Missing 'Content-MD5' request header");
                 return;
             }
@@ -48,7 +48,7 @@ namespace NetCoreServer
             }
             else
             {
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = 400;
                 context.Response.SetStatusDescription("Request body not verfied");
             }
         }
