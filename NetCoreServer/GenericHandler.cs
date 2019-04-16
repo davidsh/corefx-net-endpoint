@@ -89,7 +89,7 @@ namespace NetCoreServer
 
         public static void AddEndpointVersionHeader(this HttpResponse response)
         {
-            response.Headers.Add("X-EchoServer-Version", "2019-04-11 11:55AM PDT");
+            response.Headers.Add("X-Server-Version", "2019-04-16 8:30AM PDT");
         }
     }
 }

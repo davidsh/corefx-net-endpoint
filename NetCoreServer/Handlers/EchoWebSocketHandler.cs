@@ -19,6 +19,7 @@ namespace NetCoreServer
         {
             QueryString queryString = context.Request.QueryString;
             bool  replyWithPartialMessages = queryString.HasValue && queryString.Value.Contains("replyWithPartialMessages");
+            bool replyWithEnhancedCloseMessage = queryString.HasValue && queryString.Value.Contains("replyWithEnhancedCloseMessage");
 
             string subProtocol = context.Request.Query["subprotocol"];
 
@@ -48,7 +49,7 @@ namespace NetCoreServer
                     socket = await context.WebSockets.AcceptWebSocketAsync();
                 }
 
-                await ProcessWebSocketRequest(socket, replyWithPartialMessages);
+                await ProcessWebSocketRequest(socket, replyWithPartialMessages, replyWithEnhancedCloseMessage);
             }
             catch (Exception)
             {
@@ -56,7 +57,10 @@ namespace NetCoreServer
             }
         }
 
-        private static async Task ProcessWebSocketRequest(WebSocket socket, bool replyWithPartialMessages)
+        private static async Task ProcessWebSocketRequest(
+            WebSocket socket,
+            bool replyWithPartialMessages,
+            bool replyWithEnhancedCloseMessage)
         {
             var receiveBuffer = new byte[MaxBufferSize];
             var throwAwayBuffer = new byte[MaxBufferSize];
@@ -73,9 +77,12 @@ namespace NetCoreServer
                     }
                     else
                     {
+                        WebSocketCloseStatus closeStatus = receiveResult.CloseStatus.GetValueOrDefault();
                         await socket.CloseAsync(
-                            receiveResult.CloseStatus.GetValueOrDefault(),
-                            receiveResult.CloseStatusDescription,
+                            closeStatus,
+                            replyWithEnhancedCloseMessage ?
+                                $"Server received: {(int)closeStatus} {receiveResult.CloseStatusDescription}" :
+                                receiveResult.CloseStatusDescription,
                             CancellationToken.None);
                     }
 
