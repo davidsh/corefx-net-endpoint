@@ -58,6 +58,12 @@ namespace NetCoreServer
                 return;
             }
 
+            if (path.Equals(new PathString("/version")))
+            {
+                await VersionHandler.InvokeAsync(context);
+                return;
+            }
+
             if (path.Equals(new PathString("/websocket/echowebsocket.ashx")))
             {
                 await EchoWebSocketHandler.InvokeAsync(context);
