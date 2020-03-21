@@ -31,9 +31,6 @@ namespace NetCoreServer
                 byte[] hash = md5.ComputeHash(bytes);
                 string encodedHash = Convert.ToBase64String(hash);
 
-                // Add Echo server version information.
-                context.Response.AddEndpointVersionHeader();
-
                 context.Response.Headers.Add("Content-MD5", encodedHash);
                 context.Response.ContentType = "application/json";
                 context.Response.ContentLength = bytes.Length;

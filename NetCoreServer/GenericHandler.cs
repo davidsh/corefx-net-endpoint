@@ -92,10 +92,5 @@ namespace NetCoreServer
         {
             response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = description;
         }
-
-        public static void AddEndpointVersionHeader(this HttpResponse response)
-        {
-            response.Headers.Add("X-Server-Version", "2019-04-16 8:30AM PDT");
-        }
     }
 }

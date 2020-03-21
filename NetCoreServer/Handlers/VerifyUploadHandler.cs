@@ -9,9 +9,6 @@ namespace NetCoreServer
     {
         public static void Invoke(HttpContext context)
         {
-            // Add Echo server version information.
-            context.Response.AddEndpointVersionHeader();
-
             // Report back original request method verb.
             context.Response.Headers.Add("X-HttpRequest-Method", context.Request.Method);
 
