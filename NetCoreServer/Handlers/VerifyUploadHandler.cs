@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace NetCoreServer
 {
     public class VerifyUploadHandler
     {
-        public static void Invoke(HttpContext context)
+        public static async Task InvokeAsync(HttpContext context)
         {
             // Report back original request method verb.
             context.Response.Headers.Add("X-HttpRequest-Method", context.Request.Method);
@@ -26,7 +27,7 @@ namespace NetCoreServer
             }
 
             // Get request body.
-            byte[] requestBodyBytes = ReadAllRequestBytes(context);
+            byte[] requestBodyBytes = await ReadAllRequestBytesAsync(context);
 
             // Check MD5 checksum for non-empty request body.
             if (requestBodyBytes.Length > 0)
@@ -64,14 +65,14 @@ namespace NetCoreServer
             }
         }
 
-        private static byte[] ReadAllRequestBytes(HttpContext context)
+        private static async Task<byte[]> ReadAllRequestBytesAsync(HttpContext context)
         {
             Stream requestStream = context.Request.Body;
             byte[] buffer = new byte[16 * 1024];
             using (MemoryStream ms = new MemoryStream())
             {
                 int read;
-                while ((read = requestStream.Read(buffer, 0, buffer.Length)) > 0)
+                while ((read = await requestStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                 {
                     ms.Write(buffer, 0, read);
                 }

@@ -54,7 +54,7 @@ namespace NetCoreServer
 
             if (path.Equals(new PathString("/verifyupload.ashx")))
             {
-                VerifyUploadHandler.Invoke(context);
+                await VerifyUploadHandler.InvokeAsync(context);
                 return;
             }
 
