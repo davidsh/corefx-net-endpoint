@@ -31,6 +31,7 @@ namespace NetCoreServer
             buffer.AppendLine($"Location: {Path.GetDirectoryName(path)}");
             buffer.AppendLine($"Framework: {RuntimeInformation.FrameworkDescription}");
             buffer.AppendLine($"File Version: {fi.FileVersion}");
+            buffer.AppendLine($"Product Version: {fi.ProductVersion}");
             buffer.AppendLine($"Creation Date: {File.GetCreationTime(path)}");
             buffer.AppendLine($"Last Modified: {File.GetLastWriteTime(path)}");
 
