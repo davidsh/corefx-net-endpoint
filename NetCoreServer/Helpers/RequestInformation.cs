@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -30,7 +31,7 @@ namespace NetCoreServer
 
         public X509Certificate2 ClientCertificate { get; private set; }
 
-        public static RequestInformation Create(HttpRequest request)
+        public static async Task<RequestInformation> CreateAsync(HttpRequest request)
         {
             var info = new RequestInformation();
             info.Method = request.Method;
@@ -55,7 +56,7 @@ namespace NetCoreServer
                 Stream stream = request.Body;
                 using (var reader = new StreamReader(stream))
                 {
-                    body = reader.ReadToEnd();
+                    body = await reader.ReadToEndAsync();
                 }
             }
             catch (Exception ex)

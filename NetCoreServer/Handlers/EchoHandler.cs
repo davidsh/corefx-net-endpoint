@@ -21,7 +21,7 @@ namespace NetCoreServer
             context.Response.Headers.Add("X-HttpRequest-Method", context.Request.Method);
 
             // Echo back JSON encoded payload.
-            RequestInformation info = RequestInformation.Create(context.Request);
+            RequestInformation info = await RequestInformation.CreateAsync(context.Request);
             string echoJson = info.SerializeToJson();
 
             // Compute MD5 hash so that clients can verify the received data.
